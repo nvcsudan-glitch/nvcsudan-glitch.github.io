@@ -336,9 +336,10 @@ textarea{min-height:120px; resize:vertical}
   text-transform:uppercase; color:var(--fg-3); padding-top:.2rem}
 .cinfo .lv{font-weight:500}
 .cinfo a:hover .lv{color:var(--accent)}
-.socials{display:flex; flex-wrap:wrap; gap:.6rem; margin-top:1.5rem}
-.soc{display:inline-flex; align-items:center; gap:.5rem; border:1px solid var(--rule);
-  padding:.5rem .8rem; font-family:var(--f-mono); font-size:.66rem; letter-spacing:.12em;
+.socials{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.45rem; margin-top:1.5rem}
+@media (max-width:520px){.socials{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.soc{display:inline-flex; align-items:center; justify-content:center; gap:.4rem; border:1px solid var(--rule);
+  padding:.5rem .65rem; font-family:var(--f-mono); font-size:.66rem; letter-spacing:.08em;
   text-transform:uppercase; color:var(--fg-2); background:var(--card)}
 .soc:hover{border-color:var(--gold); color:var(--fg)}
 .soc svg{width:14px; height:14px; fill:currentColor; flex:none}
