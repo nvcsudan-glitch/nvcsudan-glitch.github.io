@@ -127,10 +127,9 @@
     });
   }
 
-  /* ---------- quote form -> WhatsApp ---------- */
+  /* ---------- quote form: WhatsApp or email, same message ---------- */
   var form = document.getElementById('quote');
-  if (form) form.addEventListener('submit', function(e){
-    e.preventDefault();
+  function quoteText(){
     var f = new FormData(form), ar = root.dir === 'rtl';
     var L = ar
       ? { h:'طلب عرض سعر — من موقع NVC', name:'الاسم', org:'الجهة', type:'نوع العمل', loc:'الموقع', msg:'التفاصيل' }
@@ -140,7 +139,18 @@
       var v = (f.get(p[0]) || '').toString().trim();
       if (v) lines.push(p[1] + ': ' + v);
     });
-    window.open('https://wa.me/249123037190?text=' + encodeURIComponent(lines.join('\n')), '_blank', 'noopener');
+    return { subject: L.h, body: lines.join('\n') };
+  }
+  if (form) form.addEventListener('submit', function(e){
+    e.preventDefault();
+    window.open('https://wa.me/249123037190?text=' + encodeURIComponent(quoteText().body), '_blank', 'noopener');
+  });
+  var mb = document.getElementById('sendMail');
+  if (mb && form) mb.addEventListener('click', function(){
+    if (!form.reportValidity()) return;
+    var q = quoteText();
+    window.location.href = 'mailto:tenders@nvcsudan.com?subject=' +
+      encodeURIComponent(q.subject) + '&body=' + encodeURIComponent(q.body);
   });
 
   /* ---------- scroll progress ---------- */

@@ -12,7 +12,7 @@
   --card:      #FFFFFF;
   --fg:        #12222E;   /* structural navy-black */
   --fg-2:      #3D4E59;
-  --fg-3:      #6B7A83;
+  --fg-3:      #566873;
   --rule:      #CBD3D4;
   --rule-2:    #E0E5E4;
   --accent:    #16648C;   /* deep engineering blue */
@@ -54,6 +54,9 @@
 /* ---------- base ---------- */
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth}
+/* anchor targets must clear the sticky header */
+section[id]{scroll-margin-top:74px}
+@media (max-width:760px){section[id]{scroll-margin-top:66px}}
 body{
   margin:0; background:var(--bg); color:var(--fg);
   font-family:var(--f-body); font-size:17px; line-height:1.65;
@@ -98,7 +101,7 @@ p{margin:0}
   color:var(--gold); letter-spacing:.14em;
 }
 .eyebrow span{
-  font-family:var(--f-mono); font-size:.68rem; letter-spacing:.24em;
+  font-family:var(--f-mono); font-size:.74rem; letter-spacing:.2em;
   text-transform:uppercase; color:var(--fg-3);
 }
 .eyebrow i{flex:1; height:1px; background:var(--rule); font-style:normal;
@@ -181,7 +184,7 @@ nav + .tools{margin-inline-start:0}
 .strip .cell:first-child{border-inline-start:0; padding-inline-start:0}
 .strip .v{font-family:var(--f-mono); font-size:clamp(1.15rem,2.6vw,1.7rem); font-weight:600;
   color:#fff; letter-spacing:-.02em; line-height:1.1}
-.strip .k{font-family:var(--f-mono); font-size:.6rem; letter-spacing:.16em; text-transform:uppercase;
+.strip .k{font-family:var(--f-mono); font-size:.7rem; letter-spacing:.16em; text-transform:uppercase;
   color:#9FB2BC; margin-top:.4rem}
 
 /* ---------- status band ---------- */
@@ -325,7 +328,7 @@ input,textarea,select{
 input:focus,textarea:focus,select:focus{border-color:var(--accent); outline:none;
   box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
 textarea{min-height:120px; resize:vertical}
-.form-note{font-size:.8rem; color:var(--fg-3)}
+.form-note{font-size:.84rem; color:var(--fg-2); line-height:1.55}
 .cinfo{display:grid; gap:0; align-content:start}
 .cinfo a, .cinfo div.row{display:grid; grid-template-columns:8.5rem 1fr; gap:1rem;
   padding:.85rem 0; border-bottom:1px solid var(--rule-2); color:var(--fg); font-size:.94rem}
@@ -430,7 +433,7 @@ footer .fb{display:flex; flex-wrap:wrap; gap:1rem; justify-content:space-between
 [dir="rtl"] .regs .rk, [dir="rtl"] .live-tag, [dir="rtl"] .facts dd,
 [dir="rtl"] .regs .rv, [dir="rtl"] .tl .yr, [dir="rtl"] footer h4,
 [dir="rtl"] .soc, [dir="rtl"] .svc-head .n, [dir="rtl"] thead th,
-[dir="rtl"] .btn.mono, [dir="rtl"] .lb .idx{
+[dir="rtl"] .btn.mono, [dir="rtl"] .lb .idx, [dir="rtl"] .cl{
   font-family:var(--f-ar); letter-spacing:0; text-transform:none;
 }
 [dir="rtl"] .facts dd, [dir="rtl"] .regs .rv, [dir="rtl"] td.n{
@@ -522,4 +525,70 @@ nav a.here{color:var(--fg); border-bottom-color:var(--gold)}
   .hero .kicker,.hero h1,.hero .sub,.hero .acts,.strip .cell{opacity:1; animation:none}
   .js .svc-list li,.js .clients div,.js tbody tr{opacity:1; transform:none}
   .prog i{transition:none}
+}
+
+
+/* ==========================================================================
+   Track-record table on a phone
+   A five-column contract schedule cannot survive a 390px screen: the value
+   and the year — the two figures that actually persuade — end up outside the
+   viewport with nothing to hint that the table scrolls. Below 760px each row
+   becomes a card and every cell carries its own column header.
+   ========================================================================== */
+.cl{display:none}
+
+@media (max-width:760px){
+  .tbl-wrap{overflow:visible; border:0; background:transparent}
+  table{min-width:0}
+  table, tbody, tr, td{display:block; width:auto}
+  thead{display:none}
+  tbody tr{
+    border:1px solid var(--rule); background:var(--card);
+    padding:.85rem 1rem; margin-bottom:.6rem;
+  }
+  tbody tr:hover td{background:transparent}
+  tbody td{
+    display:flex; align-items:baseline; justify-content:space-between; gap:1.2rem;
+    padding:.3rem 0; border-bottom:0; font-size:.9rem; text-align:start;
+  }
+  td.n{white-space:normal}
+  .cl{
+    display:inline; flex:none; font-family:var(--f-mono); font-size:.66rem;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--fg-3);
+  }
+  .cv{text-align:end}
+  tbody td:first-child{
+    display:block; padding:0 0 .55rem; margin-bottom:.45rem;
+    border-bottom:1px solid var(--rule-2);
+  }
+  tbody td:first-child .cl{display:none}
+  tbody td:first-child .cv{font-size:1.02rem; font-weight:600; color:var(--fg)}
+}
+
+/* ---------- company-profile download ---------- */
+.dl{
+  margin-top:2rem; border:1px solid var(--rule); background:var(--bg-2);
+  padding:1.6rem 1.75rem; display:flex; gap:2rem; align-items:center;
+  justify-content:space-between; flex-wrap:wrap;
+}
+.dl h3{font-family:var(--f-display); font-size:1.15rem; margin:0 0 .35rem}
+.dl p{margin:0; font-size:.92rem; color:var(--fg-2); max-width:62ch}
+.dl-acts{display:flex; gap:.6rem; flex-wrap:wrap; flex:none}
+[dir="rtl"] .dl h3, [dir="rtl"] .dl p{font-family:var(--f-ar)}
+@media (max-width:640px){
+  .dl{padding:1.25rem; gap:1.1rem}
+  .dl-acts{width:100%}
+  .dl-acts .btn{flex:1; justify-content:center}
+}
+
+/* ---------- two ways to send the enquiry ---------- */
+.send{display:flex; gap:.6rem; flex-wrap:wrap}
+.send .btn{flex:1; justify-content:center; padding:.8rem; min-width:11rem}
+
+
+/* three hero actions wrap 2 + 1 on a phone and the odd one looks stranded */
+@media (max-width:520px){
+  .hero .acts{display:grid; grid-template-columns:1fr 1fr; gap:.55rem}
+  .hero .acts .btn{justify-content:center; padding:.75rem .6rem}
+  .hero .acts .btn:first-child{grid-column:1 / -1}
 }
